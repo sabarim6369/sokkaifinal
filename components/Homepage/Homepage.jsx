@@ -368,12 +368,12 @@ const handleshopnow=()=>{
           </h1>
         </div>
 
-        <div className={styles.searchBar}>
+        {/* <div className={styles.searchBar}>
           <input
             type="text"
             placeholder="Search for products, brands, and more"
           />
-        </div>
+        </div> */}
         <div>
           <h1 className="hidden lg:block">hello</h1>
         </div>
