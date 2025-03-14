@@ -6,7 +6,7 @@ export async function GET(request) {
 
     const gift = await mongoose.connection.db
       .collection('gifts')
-      .find({})
+      .find({"status":"active"})
       .toArray();
 console.log(gift)
     return new Response(JSON.stringify(gift), {

@@ -83,9 +83,9 @@ export default function ClientHeader() {
   {categories.map((category) => (
     <li key={category._id} className="group">
       <div className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all">
-        <i className="fas fa-cogs mr-4 text-gray-500 group-hover:text-blue-500"></i>
-        {category.name}
-      </div>
+        <i className="fas fa-box mr-4 text-gray-500 group-hover:text-blue-500"></i>
+        <div className="ml-2"> {category.name}</div>
+        </div>
       {/* Render subcategories with increased margin and styling */}
       {category.subcategories && category.subcategories.length > 0 && (
         <ul className="ml-8 mt-1 border-l-2 border-gray-200 pl-4"> {/* Adjusted for hierarchy */}
