@@ -86,14 +86,13 @@ export default function ClientHeader() {
         <i className="fas fa-box mr-4 text-gray-500 group-hover:text-blue-500"></i>
         <div className="ml-2"> {category.name}</div>
         </div>
-      {/* Render subcategories with increased margin and styling */}
       {category.subcategories && category.subcategories.length > 0 && (
         <ul className="ml-8 mt-1 border-l-2 border-gray-200 pl-4"> {/* Adjusted for hierarchy */}
           {category.subcategories.map((subcat, index) => (
             <li key={index} className="group relative">
               <a
-                href={`/frontend/Products/${subcat.name.toLowerCase().replace(/\s+/g, "")}`}
-                className="flex items-center px-4 py-2 text-gray-600 hover:text-blue-500 hover:bg-gray-50 rounded transition-all"
+href={`/frontend/Products/${subcat.name.toLowerCase().replace(/\s+/g, "")}-${category.id}`}
+className="flex items-center px-4 py-2 text-gray-600 hover:text-blue-500 hover:bg-gray-50 rounded transition-all"
               >
                 <span className="absolute -left-2 w-4 h-[2px] bg-gray-200"></span>
                 <i className="fas fa-angle-right mr-3 text-sm text-gray-400 group-hover:text-blue-500"></i>

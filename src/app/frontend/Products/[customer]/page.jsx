@@ -105,18 +105,32 @@ const ProductsPage = ({ params }) => {
   const [loading, setLoading] = useState(true);
   const unwrappedParams = React.use(params);
   const { customer } = unwrappedParams || {};
+  const [categoryId, setCategoryId] = useState("");
 
+  
+
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
         let response;
-  
+        let categoryid1 = "";
+        if (customer) {
+          const extractedId = customer.match(/-(\w+)$/)?.[1] || ""; // Extracts the ID
+          categoryid1=extractedId;
+          setCategoryId(extractedId);
+          console.log(extractedId)
+        } else {
+          console.log("✅✅✅")
+          setCategoryId("");
+        }
+        console.log(customer)
         if (customer === "wishlist") {
           const userId = getUserIdFromToken(); 
           if (!userId) {
             toast.error("Please login to view your wishlist");
-            window.location.href = "/frontend/login"; // Redirect to login
+            window.location.href = "/frontend/login"; 
             return;
           }
   
@@ -129,9 +143,20 @@ const ProductsPage = ({ params }) => {
           console.log("All products:", response.data);
   
           const fetchedProducts = response.data;
+
           if (customer && customer !== 'all') {
-            setProducts(fetchedProducts.filter(product => product.category === customer));
-          } else {
+console.log(fetchedProducts[2].category)
+            if (categoryid1) {
+              const filteredProducts = fetchedProducts.filter(product =>
+                product.category?.includes(Number(categoryid1))
+              );
+            
+              console.log("😍😍😍 Filtered Products:", filteredProducts);
+              setProducts(filteredProducts);
+            } 
+            } else {
+              console.log("😍😍😍😍😍",categoryId)
+
             setProducts(fetchedProducts);
           }
         }
@@ -158,14 +183,15 @@ const ProductsPage = ({ params }) => {
     return <LoaderComponent />;
   }
 
+  const formattedCustomer = customer 
+  ? customer.replace(/-\w+$/, "").toUpperCase() // Removes the last hyphen and ID
+  : "Our Products";
+
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <h1 className="text-center text-3xl font-bold text-gray-900 mb-8">
-        {customer && customer.toLowerCase() === "all" 
-          ? "Products" 
-          : customer 
-          ? customer.toUpperCase() 
-          : "Our Products"}
+      {customer && customer.toLowerCase() === "all" ? "Products" : formattedCustomer}
+
       </h1>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">

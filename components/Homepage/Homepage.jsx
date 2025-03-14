@@ -300,9 +300,8 @@ const handleshopnow=()=>{
                   {category.subcategories.map((subcat, index) => (
                     <li key={subcat._id} className="group relative">
                       <a
-                        href={`/frontend/Products/${subcat.name
-                          .toLowerCase()
-                          .replace(/\s+/g, "")}`}
+                      href={`/frontend/Products/${subcat.name.toLowerCase().replace(/\s+/g, "")}-${category.id}`}
+
                         className="flex items-center px-4 py-2 text-gray-600 hover:text-blue-500 hover:bg-gray-50 rounded transition-all"
                       >
                         <span className="absolute -left-2 w-4 h-[2px] bg-gray-200"></span>
