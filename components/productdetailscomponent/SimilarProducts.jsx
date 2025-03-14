@@ -76,7 +76,10 @@ const SimilarProducts = ({ products }) => {
   }}
   className="pb-12"
 >
-  {products.map((product, index) => (
+  {products.
+              filter((product)=>product.status==="active")
+
+  .map((product, index) => (
     <SwiperSlide key={product._id}>
       <Link href={`/frontend/productdetails/${product._id}`}>
         <motion.div

@@ -132,11 +132,11 @@ const ProductsPage = ({ params }) => {
           break;
 
         case 'CART':
-          const addToCartResponse = await axios.post("/api/cart", { userId, productId: id });
+          const addToCartResponse = await axios.post("/api/cart", { userId, productId: id,selectedSize });
           if (addToCartResponse.status === 200) {
             toast.success("Added to cart");
           }
-          console.log(setSelectedSize,"size sleected")
+          console.log(selectedSize,"size sleected")
 
           break;
       }

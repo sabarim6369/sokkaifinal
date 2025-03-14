@@ -14,17 +14,22 @@ const wishlistSchema = new mongoose.Schema(
 const Wishlist =
   mongoose.models.Wishlist || mongoose.model("Wishlist", wishlistSchema);
 
-const cartDataSchema = new mongoose.Schema(
-  {
-    userid: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      unique: true,
+  const cartDataSchema = new mongoose.Schema(
+    {
+      userid: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        unique: true,
+      },
+      products: [
+        {
+          productId: { type: String, required: true }, // Store product ID
+          selectedSize: { type: String, required: true }, // Store selected size
+        },
+      ],
     },
-    products: { type: [String], default: [] }, 
-  },
-  { timestamps: true }
-);
+    { timestamps: true }
+  );
 
 const CartData =
   mongoose.models.CartData || mongoose.model("CartData", cartDataSchema);
