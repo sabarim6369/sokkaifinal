@@ -2,35 +2,36 @@ import { CartData } from "../Model/customerdata";
 import Product from "../Model/Product";
 import connectMongoDB from "../Connection";
 import { ConsoleMessage } from "puppeteer";
+
 export async function POST(request) {
   await connectMongoDB();
 
   try {
-    const { userId, productId, selectedSize } = await request.json();
-    console.log("Received Product ID:", productId);
-    console.log("Received User ID:", userId);
-    console.log("Selected Size:", selectedSize);
+    const { userId, productId } = await request.json();
+    console.log("consoling the productid ",productId)
+    console.log("Received UserId:", userId);
 
+    
     let user = await CartData.findOne({ userid: userId });
 
     if (!user) {
-      console.log("User not found, creating a new cart...");
+      console.log("User not found, creating a new user...");
+
+      
       user = new CartData({ userid: userId, products: [] });
     }
 
-    // Check if the product already exists in the cart with the same size
-    const productIndex = user.products.findIndex(
-      (item) => item.productId === productId && item.selectedSize === selectedSize
+    
+    const productInCart = user.products.find(
+      (item) => item.toString() === productId
     );
 
-    if (productIndex === -1) {
-      // Add new product with size
-      user.products.push({ productId, selectedSize });
-      console.log("Product added to cart.");
-    } else {
-      console.log("Product already in cart with same size.");
+    if (!productInCart) {
+      
+      user.products.push( productId );
     }
 
+    
     await user.save();
 
     return Response.json(
@@ -42,7 +43,6 @@ export async function POST(request) {
     return Response.json({ error: error.message }, { status: 400 });
   }
 }
-
 
 
 
