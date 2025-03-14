@@ -173,8 +173,7 @@ const handleshopnow=()=>{
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % gifts.length);
-    }, 3000); // Change image every 3 seconds
-
+    }, 3000);
     return () => clearInterval(interval); // Cleanup interval
   }, [gifts.length]);
 
@@ -199,8 +198,7 @@ const handleshopnow=()=>{
   
     const interval = setInterval(() => {
       setCurrentMobileImageIndex((prevIndex) => (prevIndex + 1) % gifts.length);
-    }, 3000); // Auto change every 3 seconds
-  
+    }, 3000);
     return () => clearInterval(interval);
   }, [gifts.length]);
   
@@ -248,7 +246,7 @@ const handleshopnow=()=>{
   }, []);
   
   if (loading) {
-    return <Loadercomponent />; // Render loader while fetching data
+    return <Loadercomponent />; 
   }
   
   return (
@@ -582,7 +580,9 @@ const handleshopnow=()=>{
             </Link>
           </div>
           <div className={styles.trendingItemsWrapper}>
-            {products.map((product) => (
+            {products.
+            filter((product)=>product.status==="active")
+            .map((product) => (
               <div className={styles.itemWrapper} key={product.id}>
                 {product.selectedGift && (
                   <div className={styles.giftTag}>
@@ -758,7 +758,11 @@ const handleshopnow=()=>{
             </Link>
           </div>
           <div className={styles.arrivalsItems}>
-            {products.map((product) => (
+            {products.
+                        filter((product)=>product.status==="active")
+
+            .map((product) => (
+
               <div className={styles.itemWrapper} key={product.id}>
                 {product.selectedGift && (
                   <div className={styles.giftTag}>
