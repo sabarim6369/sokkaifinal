@@ -48,7 +48,7 @@ function PaymentSection({
 
      
       if (paymentMethod === "cod") {
-        // Cash on Delivery flow
+ 
        const fetchimageurl=await handlePostPaymentFlow();
         const purchaseHistory = {
           userId,

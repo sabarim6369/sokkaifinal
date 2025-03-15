@@ -332,7 +332,7 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const calculateDiscountedTotal = () => {
     if(selectedItems.length>0){
-    return grandTotal + 30;
+    return grandTotal;
     }
     else{
       return grandTotal

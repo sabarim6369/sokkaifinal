@@ -16,7 +16,7 @@ function PriceDetails({ priceDetails, totalAmount }) {
         <span>Delivery Charges</span>
         <span>
           <span className="original-price">₹100</span>
-          <span className="free">₹30</span>
+          <span className="free">₹0</span>
         </span>
       </div>
 
