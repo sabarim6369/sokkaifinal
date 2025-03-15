@@ -72,6 +72,7 @@ function PaymentSection({
       } else {
         // Online Payment via Razorpay
         const orderResponse = await axios.post("/api/razorpay", { amount: totalAmount });
+        console.log("🎉🎉🎉order response:",orderResponse)
         if (orderResponse.status === 200) {
           const { id: order_id, amount, currency } = orderResponse.data;
           const options = {
@@ -83,20 +84,16 @@ function PaymentSection({
             order_id,
             handler: async (response) => {
               const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
-
-              // Verify payment on the server
+            
               try {
                 const verifyResponse = await axios.post("/api/razorpay/paymentverification", {
                   razorpay_payment_id,
                   razorpay_order_id,
                   razorpay_signature,
                 });
-             console.log(verifyResponse)
+            
                 if (verifyResponse.data?.success) {
-                  // Save purchase history
-                  console.log("fvvv fv fv fv")
-                  const fetchimageurl=await handlePostPaymentFlow();
-                  console.log("😒😒😒😒",fetchimageurl)
+                  const fetchimageurl = await handlePostPaymentFlow();
                   const purchaseHistory = {
                     userId,
                     products,
@@ -104,29 +101,28 @@ function PaymentSection({
                     timestamp: new Date(),
                     addressId,
                     couponDiscount,
-                    imageUrl:fetchimageurl,
+                    imageUrl: fetchimageurl,
                     paymentMethod
                   };
             
-                  const saveResponse = await axios.post("/api/purchasehistory", purchaseHistory,imageUrl);
+                  const saveResponse = await axios.post("/api/purchasehistory", purchaseHistory);
                   if (saveResponse.status === 200 || saveResponse.status === 201) {
                     toast.success("Payment successful and order placed!");
                     onPaymentComplete();
-                    handlePostPaymentFlow();
+                    
+                    if (rzp) rzp.close();
                   } else {
                     toast.error("Failed to save purchase history. Please contact support.");
                   }
                 } else {
-                  toast.error(
-                    verifyResponse.data?.error ||
-                      "Payment verification failed. Please try again."
-                  );
+                  toast.error(verifyResponse.data?.error || "Payment verification failed. Please try again.");
                 }
               } catch (error) {
                 console.error("Error verifying payment:", error);
                 toast.error("An error occurred during payment verification.");
               }
             },
+            
             prefill: {
               name: "Customer Name",
               email: "customer@example.com",
