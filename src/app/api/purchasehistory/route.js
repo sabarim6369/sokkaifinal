@@ -8,7 +8,11 @@ export async function POST(request) {
   try {
     await connectMongoDB();
 
-    const { userId, products, totalAmount, timestamp, addressId,couponDiscount,imageUrl } = await request.json();
+    let { userId, products, totalAmount, timestamp, addressId, couponDiscount, imageUrl, paymentMethod } = await request.json();
+    if (paymentMethod !== "cod") {
+      paymentMethod = "O";
+    }
+    
     console.log(addressId);
     console.log("😍😍",imageUrl)
     const user = await User.findById(userId);
@@ -50,7 +54,9 @@ export async function POST(request) {
       totalAmount,
       timestamp,
       addressId,
-      invoice:imageUrl
+      invoice:imageUrl,
+      paymentMethod
+
     });
 
     await user.save();

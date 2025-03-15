@@ -22,7 +22,7 @@ const SizeSelector = ({ availableSizes, selectedSize, onSizeSelect }) => {
           return (
             <button
               key={size}
-              onClick={() => handleSizeSelect(size)}
+              // onClick={() => handleSizeSelect(size)}
               className={`
                 relative py-3 rounded-lg font-medium text-sm flex items-center justify-center
                 transition-all duration-200

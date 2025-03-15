@@ -59,6 +59,10 @@ const purchaseHistorySchema = new mongoose.Schema({
     default: "pending",
     enum: ["pending", "dispatched", "cancelled"], 
   },
+  paymentMethod: {
+    type: String,
+    default: null, // Optional field
+  },
 });
 
 

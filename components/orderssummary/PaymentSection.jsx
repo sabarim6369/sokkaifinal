@@ -57,7 +57,8 @@ function PaymentSection({
           timestamp: new Date(),
           addressId,
           couponDiscount,
-          imageUrl:fetchimageurl
+          imageUrl:fetchimageurl,
+          paymentMethod
         };
   console.log("😍😍😍😍😍😍😍😍imageurl",imageUrl)
         const response = await axios.post("/api/purchasehistory", purchaseHistory);
@@ -103,7 +104,8 @@ function PaymentSection({
                     timestamp: new Date(),
                     addressId,
                     couponDiscount,
-                    imageUrl:fetchimageurl
+                    imageUrl:fetchimageurl,
+                    paymentMethod
                   };
             
                   const saveResponse = await axios.post("/api/purchasehistory", purchaseHistory,imageUrl);

@@ -104,10 +104,10 @@ const ProductsPage = ({ params }) => {
       return;
     }
 
-    if (!selectedSize && (action === 'ORDER')) {
-      toast.warning('Please select a size first');
-      return;
-    }
+    // if (!selectedSize && (action === 'ORDER')) {
+    //   toast.warning('Please select a size first');
+    //   return;
+    // }
 
     if (!userId) {
       toast.error("Authentication error");
