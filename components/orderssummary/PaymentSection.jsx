@@ -109,7 +109,7 @@ function PaymentSection({
                   };
             
                   const saveResponse = await axios.post("/api/purchasehistory", purchaseHistory,imageUrl);
-                  if (saveResponse.status === 200) {
+                  if (saveResponse.status === 200 || saveResponse.status === 201) {
                     toast.success("Payment successful and order placed!");
                     onPaymentComplete();
                     handlePostPaymentFlow();
