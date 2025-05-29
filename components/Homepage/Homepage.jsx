@@ -27,6 +27,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [gifts, setGifts] = useState([]);
   const router = useRouter();
+  const [selectedType, setSelectedType] = useState("");
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const sidebarRef = useRef(null); 
     const pageRef = useRef(null); 
@@ -216,7 +217,7 @@ const handleshopnow=()=>{
     );
   };
   const [showSearch, setShowSearch] = useState(false);
-
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
@@ -426,6 +427,16 @@ const handleshopnow=()=>{
           >
             <i className="fas fa-search"></i>
           </button>
+  {/* Filter Icon */}
+  <button
+    className="text-gray-700 hover:text-blue-500 p-2"
+    onClick={() => setIsFilterPopupOpen(!isFilterPopupOpen)}
+    aria-label="Filter"
+  >
+    <i className="fas fa-filter text-lg lg:text-2xl"></i>
+  </button>
+
+ 
 
           {/* Wishlist Icon */}
           <Link href="/frontend/Products/wishlist">
@@ -477,9 +488,78 @@ const handleshopnow=()=>{
           </div>
         )}
       </header>
+    {/* Filter Popup */}
+  {isFilterPopupOpen && (
+    <div className="fixed left-1/2 top-full mt-2 w-30 -translate-x-1/2 bg-white shadow-2xl rounded-lg z-50 p-6">
+      <div className="flex justify-between items-center mb-4">
+        <h4 className="text-xl font-bold text-gray-800">Filter Options</h4>
+        <button
+          onClick={() => setIsFilterPopupOpen(false)}
+          className="text-gray-500 hover:text-red-500 text-2xl leading-none"
+          aria-label="Close Filter"
+        >
+          &times;
+        </button>
+      </div>
+
+      {/* Category selection */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Select Category
+        </label>
+        <div className="space-y-2">
+          {["shirts", "pants", "tshirt"].map((type) => (
+            <label key={type} className="flex items-center">
+              <input
+                type="radio"
+                name="type"
+                value={type}
+                checked={selectedType === type}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className="form-radio text-blue-600 focus:ring-2 focus:ring-blue-500"
+              />
+              <span className="ml-2 capitalize text-gray-700">{type}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Price Range */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Price Range
+        </label>
+        <div className="flex space-x-2">
+          <input
+            type="number"
+            placeholder="Min"
+            className="w-1/2 px-3 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="number"
+            placeholder="Max"
+            className="w-1/2 px-3 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      <button
+        onClick={() => {
+          if (selectedType) {
+            window.location.href = `/frontend/Products/${selectedType}`;
+          }
+        }}
+        className="w-full bg-blue-600 text-white font-medium py-2 rounded hover:bg-blue-700 transition duration-300"
+      >
+        Apply Filters
+      </button>
+    </div>
+  )}
 
       <main className={styles.main}>
+
         <section className="relative bg-gradient-to-b from-[#f8f9fa] to-white py-12 overflow-hidden lg:hidden">
+          
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative">
               <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#f8f9fa] to-transparent z-10" />
